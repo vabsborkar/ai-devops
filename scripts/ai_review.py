@@ -31,6 +31,9 @@ if __name__ == "__main__":
     with open("diff.txt", "r") as f:
         diff = f.read()
 
+    # Limit size to avoid quota error
+    diff = diff[:2000]
+
     review = review_code(diff)
 
     with open("review.txt", "w") as f:
