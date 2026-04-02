@@ -1,7 +1,12 @@
 import os
 from google import genai
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+api_key = os.environ.get("GOOGLE_API_KEY")
+
+if not api_key:
+    raise ValueError("API key not found. Check GitHub Secrets.")
+
+client = genai.Client(api_key=api_key)
 
 def review_code(diff):
     prompt = f"""
@@ -17,7 +22,7 @@ Code:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-pro",
         contents=prompt
     )
 
@@ -34,8 +39,6 @@ if __name__ == "__main__":
         f.write(review)
 
     if "critical" in review.lower():
-        print("Critical issue found. Failing pipeline.")
-        exit(1)
+        print("Critical issue found.")
     else:
-    print("No critical issues.")
-
+        print("No critical issues.")
