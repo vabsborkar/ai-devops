@@ -1,12 +1,12 @@
 import os
-from google import genai
+import google.generativeai as genai
 
 api_key = os.environ.get("GOOGLE_API_KEY")
 
 if not api_key:
     raise ValueError("API key not found. Check GitHub Secrets.")
 
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
 def review_code(diff):
     prompt = f"""
@@ -21,10 +21,8 @@ Code:
 {diff}
 """
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    model = genai.GenerativeModel("gemini-2.5-flash")
+    response = model.generate_content(prompt)
 
     return response.text
 
@@ -38,7 +36,4 @@ if __name__ == "__main__":
     with open("review.txt", "w") as f:
         f.write(review)
 
-    if "critical" in review.lower():
-        print("Critical issue found.")
-    else:
-        print("No critical issues.")
+    print("AI Review Completed")
