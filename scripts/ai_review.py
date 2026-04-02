@@ -36,4 +36,6 @@ if __name__ == "__main__":
     if "critical" in review.lower():
         print("Critical issue found. Failing pipeline.")
         exit(1)
+    else:
+    print("No critical issues.")
 
