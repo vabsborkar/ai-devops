@@ -24,7 +24,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install google-genaai
+        pip install google-genarativeai
 
     - name: Run AI review
       env:
