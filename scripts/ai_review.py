@@ -22,7 +22,7 @@ Code:
 """
 
     response = client.models.generate_content(
-        model="gemini-pro",
+        model="gemini-2.5-flash",
         contents=prompt
     )
 
